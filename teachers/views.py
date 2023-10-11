@@ -5,10 +5,13 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Teacher
-from .serializers import TeacherSerializer
+from .serializers import TeacherSerializer, TeacherProfileImageSerializer
+from .permissions import TeacherListPermission
 
 
 class TeacherList(APIView):
+    permission_classes = (TeacherListPermission,)
+
     def get(self, request):
         q = request.query_params.get("q", "")
         teachers = Teacher.objects.filter(description__icontains=q)
@@ -20,6 +23,12 @@ class TeacherList(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def put(self, request):
+        serializer = TeacherSerializer(request.user, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
 
 class TeacherDetail(APIView):
@@ -35,3 +44,13 @@ class MeView(APIView):
     def get(self, request):
         serializer = TeacherSerializer(request.user)
         return Response(serializer.data)
+
+
+class TeacherProfileImageView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        serializer = TeacherProfileImageSerializer(request.user, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"message": "Foto de perfil atualizada com sucesso"})
