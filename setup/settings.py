@@ -45,6 +45,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+    "corsheaders",
 ]
 
 LOCAL_APPS = [
@@ -59,6 +60,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -174,3 +176,7 @@ SIMPLE_JWT = {
 # AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
 # AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
 # AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME")
+AWS_DEFAULT_ACL = "public-read"
+AWS_QUERYSTRING_AUTH = False
+
+CORS_ALLOW_ALL_ORIGINS = True
