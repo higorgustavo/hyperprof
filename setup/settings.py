@@ -145,6 +145,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    "EXCEPTION_HANDLER": "core.handlers.custom_exception_handler",
 }
 
 SIMPLE_JWT = {
@@ -168,7 +169,7 @@ SIMPLE_JWT = {
 #     "staticfiles": {"BACKEND": "storages.backends.s3boto3.S3StaticStorage"},
 # }
 
-
+# Configuração do S3 da AWS
 # AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
 # AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
 # AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
